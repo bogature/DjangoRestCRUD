@@ -12,6 +12,5 @@ storage.db
 *.pem
 *.crt
 media
-private_settings.py
 static
 debug.log
