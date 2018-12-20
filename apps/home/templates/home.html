@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+</head>
+<body ng-app="ProductApp">
+
+<div class="container">
+	  <div class="row">
+		  <div class="col-md-12">
+              <hr>
+              <div class="container" ng-controller="Products as ctrl">
+                  <h3>Product:</h3>
+                  <div class="col-md-5">
+                      <label for="fio">Name:</label>
+                      <input class="form-control" type="text" id="ProductName">
+                  </div>
+                  <div class="col-md-5">
+                      <label for="fio">Price:</label>
+                      <input class="form-control" type="text" id="ProductPrice">
+                  </div>
+                  <div class="col-md-2" style="padding-top: 24px">
+                      <button type="button" class="btn btn-success" ng-click="ctrl.insertProduct()">Add</button>
+                  </div>
+                  <br>
+                  <div class="col-md-12">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr ng-repeat="item in products">
+                            {% verbatim %}
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>$ <b>{{ item.price }}</b></td>
+                            <td>
+                            <button type="button" ng-click="ctrl.delProduct(item.id)">Del</button>
+                            </td>
+                            <td>
+                            <button ng-click="ctrl.updateProduct(item.id)">Upd</button>
+                            </td>
+                            {% endverbatim %}
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+
+
+    <div class="container" ng-controller="Categorys as ctrl2">
+        <hr>
+        <h3>Categorys:</h3>
+        <div class="col-md-5">
+            <label for="fio">Name:</label>
+            <input class="form-control" type="text" id="CategoryName">
+        </div>
+        <div class="col-md-5">
+            <label for="fio">Products ID:</label>
+            <br>
+
+            <select multiple id="selectcateg">
+                <option ng-repeat="item in products">
+                    {% verbatim %}
+                        {{ item.id }}
+                    {% endverbatim %}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-2"  style="padding-top: 24px">
+            <button type="button" class="btn btn-success" ng-click="ctrl2.insertCategory()">Add</button>
+        </div>
+
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Назва</th>
+                <th>Продукти</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="item in cat">
+                    {% verbatim %}
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <div ng-repeat="item2 in item.products">
+                            <div>{{ item2.name }}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" ng-click="ctrl2.delCategory(item.id)">Del</button>
+                    </td>
+                    <td>
+                        <button ng-click="ctrl2.updateCategory(item.id)">Upd</button>
+                    </td>
+                    {% endverbatim %}
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+    <div class="container" ng-controller="OrderItem as ctrl3">
+
+        <hr>
+        <h3>Order Item:</h3>
+
+        <div class="col-md-5">
+            <label for="fio">Number:</label>
+            <input class="form-control" type="text" id="OrderItemNumber">
+        </div>
+        <div class="col-md-5">
+            <label for="fio">Products ID:</label>
+            <br>
+
+
+            <select id="selectorderitem">
+                <option ng-repeat="item in products">
+                    {% verbatim %}
+                        {{ item.id }}
+                    {% endverbatim %}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-2"  style="padding-top: 24px">
+            <button type="button" class="btn btn-success" ng-click="ctrl3.insertOrderItem()">Add</button>
+        </div>
+
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Number</th>
+                <th>Product Name</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="item in order_item">
+                    {% verbatim %}
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.number }}</td>
+                    <td>{{ item.product.name }}</td>
+                    <td>
+                        <button type="button" ng-click="ctrl3.delOrderItem(item.id)">Del</button>
+                    </td>
+                    <td>
+                        <button ng-click="ctrl3.updateOrderItem(item.id)">Upd</button>
+                    </td>
+                    {% endverbatim %}
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <hr>
+    <h3>Order:</h3>
+    <div class="container" ng-controller="Order as ctrl4">
+
+
+        <div class="col-md-4">
+            <label for="fio">Sum:</label>
+            <input class="form-control" type="text" id="SumOrder">
+        </div>
+        <div class="col-md-3">
+            <label for="fio">Orders Items ID:</label>
+            <br>
+
+
+            <select multiple id="selectorder">
+                <option ng-repeat="item in order_item">
+                    {% verbatim %}
+                        {{ item.id }}
+                    {% endverbatim %}
+                </option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label for="fio">Datetime:</label>
+            <input id="datetime" type="datetime-local">
+        </div>
+
+        <div class="col-md-2"  style="padding-top: 24px">
+            <button type="button" class="btn btn-success" ng-click="ctrl4.insertOrder()">Add</button>
+        </div>
+
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sum</th>
+                <th>Elements Order</th>
+                <th>Дата</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="item in order_all">
+                    {% verbatim %}
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.sum }}</td>
+                    <td>
+                        <div ng-repeat="item2 in item.orders_items">
+                            {{ item2.product.name }}
+                        </div>
+                    </td>
+
+                    <td>{{ item.datetime| date:'dd-MM-yyyy' }}</td>
+                    <td>
+                        <button type="button" ng-click="ctrl4.updateOrder(item.id)">Upd</button>
+                    </td>
+                    <td>
+                        <button type="button" ng-click="ctrl4.delOrder(item.id)">Del</button>
+                    </td>
+                    {% endverbatim %}
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+    <div class="container" ng-controller="Report as ctrl5">
+        <hr>
+        <h3>Report:</h3>
+
+        <table class="table">
+
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Sum</th>
+                <th>Datetime</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="item in reports">
+                    {% verbatim %}
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.sum }}</td>
+                    <td>{{ item.datetime| date:'dd-MM-yyyy' }}</td>
+
+                    {% endverbatim %}
+                </tr>
+
+            </tbody>
+        </table>
+        <hr>
+
+    </div>
+
+</body>
+
+    <script src="/static/js/jquery.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/static/js/testing.js"></script>
+
+</html>
